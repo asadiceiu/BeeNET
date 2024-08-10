@@ -1,0 +1,6 @@
+# Ignore outputs folder
+outputs/
+# ignore python cache files
+__pycache__/
+*.pyc
+
