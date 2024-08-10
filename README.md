@@ -94,7 +94,7 @@ Here are some screenshots of the BeeTrackingGUI:
 
 ![Save Track Video](images/Screenshot_9.png)
 
-![Tracking Demo](images/DemoTrack.mp4)
+![Tracking Demo](images/DemoTrack.gif)
 
 ## Contributing
 
