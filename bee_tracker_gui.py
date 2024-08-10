@@ -4,14 +4,9 @@ import os
 import shutil
 import tkinter as tk
 
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox
 import cv2
-from matplotlib import patches
-from matplotlib.collections import LineCollection
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from bee_detector_yolo import BeeDetectorYolo
 from kalman_tracker import KalmanFilterTracker
@@ -27,7 +22,7 @@ class BeeTrackerGUI():
         self.initUI()
 
     def initUI(self):
-        self.left_frame = tk.Frame(self.root, width=600, height=600, borderwidth=2, relief='solid')
+        self.left_frame = tk.Frame(self.root, width=600, height=600)
         self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
         self.top_left_control_frame = tk.Frame(self.left_frame)
@@ -61,7 +56,7 @@ class BeeTrackerGUI():
 
         self.zone = None
 
-        self.right_frame = tk.Frame(self.root, width=600, height=600, borderwidth=2, relief='solid')
+        self.right_frame = tk.Frame(self.root, width=600, height=600)
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         self.top_control_frame = tk.Frame(self.right_frame)
@@ -174,14 +169,14 @@ class BeeTrackerGUI():
         # unbind the canvas from the click event
         self.track_canvas.unbind('<Button-1>')
         # load the detected bee csv
-        self.tracks = self.bee_tracker.track_insects(self.detected_bee_csv_path, self.zone)
+        self.tracks, counts = self.bee_tracker.track_insects(self.detected_bee_csv_path, self.zone)
         print(f'Tracks: {len(self.tracks)}')
         if self.tracks is None:
             print('No tracks found')
             return
         self.n_tracks = len(self.tracks)
         self.current_track_index = 0
-        messagebox.showinfo('Info', f'Tracking Done. Found {self.n_tracks} tracks')
+        messagebox.showinfo('Info', f'Tracking Done. Found {self.n_tracks} tracks.\nEntering: {counts["entering"]}\nExiting: {counts["exiting"]}\nInside: {counts["inside"]}')
         self.draw_tracks(self.tracks[self.current_track_index])
         ...
     
@@ -249,8 +244,9 @@ class BeeTrackerGUI():
         track = self.tracks[track_id]
         frame_ids = track['frame_ids']
         positions = track['positions']
+        track_type = track['classification']
         extension = self.video_path.split('.')[-1]
-        out_file_name = self.video_path.replace("."+extension, f"_track_{track_id}.mp4")
+        out_file_name = self.video_path.replace("."+extension, f"_track_{track_id}_{track_type}.mp4")
         out = cv2.VideoWriter(out_file_name, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, (int(self.video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.video.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         for frame_id, position in zip(frame_ids, positions):
             self.video.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
@@ -375,7 +371,7 @@ class BeeTrackerGUI():
         self.original_video_path = os.path.join('outputs', os.path.basename(self.file_path))
         self.video_path = os.path.join('outputs', os.path.basename(self.file_path))
         os.makedirs('outputs', exist_ok=True)
-        if not os.path.basename(self.file_path) == os.path.basename(self.original_video_path):
+        if not os.path.exists(self.video_path):
             shutil.copyfile(self.file_path, self.video_path) # copy the video to the videos folder only if it is not already there
         self.init_video()
 

@@ -1,7 +1,6 @@
 from matplotlib.path import Path
 import numpy as np
 from filterpy.kalman import KalmanFilter
-import datetime
 from scipy.optimize import linear_sum_assignment
 import pandas as pd
 
@@ -94,9 +93,16 @@ class KalmanFilterTracker():
         # sort tracks by number of positions
         self.all_tracks.sort(key=lambda x: len(x['positions']), reverse=True)
         # classify tracks
+        counts = {
+            'inside': 0,
+            'outside': 0,
+            'entering': 0,
+            'exiting': 0
+        }
         for track in self.all_tracks:
             track['classification'] = self.flexible_zone_track_classifier(track, zone)
-        return self.all_tracks
+            counts[track['classification']] += 1
+        return self.all_tracks, counts
     
     def get_track_info(self, track_id) -> dict:
         for track in self.all_tracks:

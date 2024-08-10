@@ -22,17 +22,19 @@ Here’s a sample GitHub README for your "BeeTrackingGUI" repository:
 
 Ensure you have Python 3.x installed on your system. You will also need the following Python libraries:
 
-- `tkinter`
+- `opencv-python`
+- `ultralytics` (for YOLO)
 - `matplotlib`
 - `numpy`
-- `opencv-python`
-- `torch` (for YOLO)
-- `shapely` (optional, depending on implementation)
+- `tkinter`
+- `pandas`
+- `scikit-learn`
+- `filterpy` (for Kalman filter)
 
 You can install these dependencies via pip:
 
 ```bash
-pip install tkinter matplotlib numpy opencv-python torch shapely
+pip install opencv-python matplotlib numpy tkinter pandas scikit-learn filterpy ultralytics
 ```
 
 ### Cloning the Repository
@@ -63,9 +65,34 @@ python bee_tracker_gui.py
 Below is an example of how to use the BeeTrackingGUI:
 
 1. Load your video file by clicking the "Load Video" button.
-2. Use the "Assign Zone" feature to define specific areas within the video for analysis.
-3. Start the bee detection and tracking process by clicking "Track Bees."
-4. Monitor the real-time tracking statistics and adjust parameters as needed.
+2. Click on the "Detect Bees" button to identify bees in the video frames. It uses the YOLO detector to locate bees in each frames. Therefore, depending on the video length, it may take some time to process. It will automatically create a CSV file with the detected bee information along with a new video file with bounding boxes around the detected bees. Next time you load the same video, it will use the CSV file to load the detected bee information instead of running the detection again.
+3. Once the detection is complete, you can assign zones by clicking the "Assign Zone" button. This allows you to define specific areas within the video frame for analysis.
+4. Start the bee tracking process by clicking the "Track Bees" button. The system will use the Kalman filter to track the movement of bees over time. After tracking is complete, a summary of the bee activity will be displayed.
+5. You can select different tracks using the "<<" and ">>" buttons to view the tracking results for each bee individually.
+6. You can use "Show Track Video" button to visualise the bee tracking in the video.
+7. You can use "Save Track Video" button to save the video with tracking information.
+
+## Screenshots
+
+Here are some screenshots of the BeeTrackingGUI:
+
+![Main Interface](images/Screenshot 2024-08-10 at 3.37.08 PM.png)
+
+![Load Video](images/Screenshot 2024-08-10 at 3.42.20 PM.png)
+
+![Detect Bees](images/Screenshot 2024-08-10 at 3.51.05 PM.png)
+
+![Detect Bees Result](images/Screenshot 2024-08-10 at 3.51.24 PM.png)
+
+![Assign Zone](images/Screenshot 2024-08-10 at 3.52.04 PM.png)
+
+![Track Bees](images/Screenshot 2024-08-10 at 4.00.10 PM.png)
+
+![Track Bees Result](images/Screenshot 2024-08-10 at 3.53.22 PM.png)
+
+![Show Track Video](images/Screenshot 2024-08-10 at 3.53.44 PM.png)
+
+![Save Track Video](images/Screenshot 2024-08-10 at 4.01.04 PM.png)
 
 ## Contributing
 
@@ -77,4 +104,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or suggestions, feel free to reach out via GitHub issues or email [Your Email Address].
+For any questions or suggestions, feel free to reach out via GitHub issues or email [asaduzzaman@monash.edu].

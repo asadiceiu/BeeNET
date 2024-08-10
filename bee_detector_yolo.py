@@ -1,14 +1,11 @@
-
-import glob
 from time import time
 import os
 import cv2
-import torch
 from ultralytics import YOLO
 
 class BeeDetectorYolo:
     def __init__(self, yolo_path):
-        self.device = 'mps' if torch.backends.mps.is_available() else 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.device = 'mps'
         self.yolo = YOLO(yolo_path)
         self.yolo.to(self.device)
     

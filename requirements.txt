@@ -1,7 +1,8 @@
+opencv-python
 ultralytics
 matplotlib
 numpy
-cv2
 tkinter
 pandas
 scikit-learn
+filterpy
