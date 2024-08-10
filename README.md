@@ -1,8 +1,6 @@
 # BeeTrackingGUI
 
-<p align='center'>
-<img scr="images/DemoTrack.gif" alt "Demo Video" />
-</p>
+![Demo Video](images/DemoTrack.gif)
 
 ## Overview
 
