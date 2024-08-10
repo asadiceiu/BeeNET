@@ -1,3 +1,9 @@
+# Description: Class to track insects using a Kalman filter.
+#
+# Created By: Asaduz Zaman
+# Created On: 10 August 2024
+# Updated By: Asaduz Zaman
+# Updated On: 10:00 PM 10 August 2024
 from matplotlib.path import Path
 import numpy as np
 from filterpy.kalman import KalmanFilter
@@ -5,6 +11,22 @@ from scipy.optimize import linear_sum_assignment
 import pandas as pd
 
 class KalmanFilterTracker():
+    """
+    Class to track insects using a Kalman filter.
+    Attributes:
+        all_tracks: List of dictionaries containing track information.
+        process_noise: Process noise for the Kalman filter.
+        measurement_noise: Measurement noise for the Kalman filter.
+        distance_threshold: Maximum distance between a track and an observation for assignment.
+        max_frames_before_stopped: Maximum number of frames before a track is considered stopped.
+        kf_dim_x: Dimension of the state vector for the Kalman filter.
+        kf_dim_z: Dimension of the observation vector for the Kalman filter.
+        F: State transition matrix for the Kalman filter.
+        H: Measurement matrix for the Kalman filter.
+        R: Measurement noise covariance matrix for the Kalman filter.
+        Q: Process noise covariance matrix for the Kalman filter.
+        P: Initial state covariance matrix for the Kalman filter
+    """
     def __init__(self) -> None:
         self.all_tracks = []
         self.process_noise = 0.1
@@ -136,4 +158,13 @@ class KalmanFilterTracker():
             return 'entering'
         else:
             return 'outside'
-        
+
+if __name__ == '__main__':
+    # print the docstring of the class
+    print("Note: This is a class definition file and cannot be executed directly.")
+    print("=========================================")
+    print(KalmanFilterTracker.__doc__)
+    print("=========================================")
+    print("Example usage:")
+    print("kf_tracker = KalmanFilterTracker()")
+    print("all_tracks, counts = kf_tracker.track_insects('detected_bee.csv', zone)")
