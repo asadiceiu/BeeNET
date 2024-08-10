@@ -76,23 +76,23 @@ Below is an example of how to use the BeeTrackingGUI:
 
 Here are some screenshots of the BeeTrackingGUI:
 
-![Main Interface](images/Screenshot 2024-08-10 at 3.37.08 PM.png)
+![Main Interface](images/Screenshot_1.png)
 
-![Load Video](images/Screenshot 2024-08-10 at 3.42.20 PM.png)
+![Load Video](images/Screenshot_2.png)
 
-![Detect Bees](images/Screenshot 2024-08-10 at 3.51.05 PM.png)
+![Detect Bees](images/Screenshot_3.png)
 
-![Detect Bees Result](images/Screenshot 2024-08-10 at 3.51.24 PM.png)
+![Detect Bees Result](images/Screenshot_4.png)
 
-![Assign Zone](images/Screenshot 2024-08-10 at 3.52.04 PM.png)
+![Assign Zone](images/Screenshot_5.png)
 
-![Track Bees](images/Screenshot 2024-08-10 at 4.00.10 PM.png)
+![Track Bees](images/Screenshot_6.png)
 
-![Track Bees Result](images/Screenshot 2024-08-10 at 3.53.22 PM.png)
+![Track Bees Result](images/Screenshot_7.png)
 
-![Show Track Video](images/Screenshot 2024-08-10 at 3.53.44 PM.png)
+![Show Track Video](images/Screenshot_8.png)
 
-![Save Track Video](images/Screenshot 2024-08-10 at 4.01.04 PM.png)
+![Save Track Video](images/Screenshot_9.png)
 
 ## Contributing
 
