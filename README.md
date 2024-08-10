@@ -1,7 +1,3 @@
-Here’s a sample GitHub README for your "BeeTrackingGUI" repository:
-
----
-
 # BeeTrackingGUI
 
 ## Overview
