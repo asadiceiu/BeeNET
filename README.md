@@ -1,5 +1,9 @@
 # BeeTrackingGUI
 
+<p align='center'>
+<img scr="images/DemoTrack.gif" alt "Demo Video" />
+</p>
+
 ## Overview
 
 **BeeTrackingGUI** is a Python-based graphical user interface (GUI) designed for tracking bees in video footage. This tool integrates bee detection, Kalman filter-based tracking, and user interaction for zone assignment and real-time monitoring. The system is tailored for researchers and enthusiasts working with bee tracking data, providing an intuitive interface to manage and analyze bee movement.
@@ -107,10 +111,6 @@ Here are some screenshots of the BeeTrackingGUI:
 ### Save Track Video Interface
 
 ![Save Track Video](images/Screenshot_9.png)
-
-### Tracking Demo
-
-![Tracking Demo](images/DemoTrack.gif)
 
 ## Contributing
 
