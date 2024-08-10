@@ -94,6 +94,8 @@ Here are some screenshots of the BeeTrackingGUI:
 
 ![Save Track Video](images/Screenshot_9.png)
 
+![Tracking Demo](images/DemoTrack.mp4)
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository, create a new branch, and submit a pull request for any features or improvements.
