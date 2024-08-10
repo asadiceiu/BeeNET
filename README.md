@@ -78,7 +78,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 For any questions or suggestions, feel free to reach out via GitHub issues or email [Your Email Address].
-
----
-
-You can modify the README as needed to better fit the specific details of your project. If you'd like any further customizations, let me know!
