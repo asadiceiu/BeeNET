@@ -76,23 +76,43 @@ Below is an example of how to use the BeeTrackingGUI:
 
 Here are some screenshots of the BeeTrackingGUI:
 
+### Main Interface of the BeeTrackingGUI
+
 ![Main Interface](images/Screenshot_1.png)
+
+### Load Video Interface
 
 ![Load Video](images/Screenshot_2.png)
 
+### Detect Bees using YOLO-v8
+
 ![Detect Bees](images/Screenshot_3.png)
+
+### Detected Bees Result
 
 ![Detect Bees Result](images/Screenshot_4.png)
 
+### Assign Zone Interface
+
 ![Assign Zone](images/Screenshot_5.png)
+
+### Track Bees Interface
 
 ![Track Bees](images/Screenshot_6.png)
 
+### Track Bees Result
+
 ![Track Bees Result](images/Screenshot_7.png)
+
+### Show Track Video Interface
 
 ![Show Track Video](images/Screenshot_8.png)
 
+### Save Track Video Interface
+
 ![Save Track Video](images/Screenshot_9.png)
+
+### Tracking Demo
 
 ![Tracking Demo](images/DemoTrack.gif)
 
