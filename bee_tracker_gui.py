@@ -80,8 +80,8 @@ class BeeTrackerGUI:
         control_frame.pack(pady=10, padx=10)
 
         self.create_button(control_frame, 'Track', self.track, 0, 0)
-        self.create_button(control_frame, 'Show Track Video', self.show_track_video, 0, 1)
-        self.create_button(control_frame, 'Save Track Video', self.save_track_video, 0, 2)
+        self.create_button(control_frame, 'Play Track', self.show_track_video, 0, 1)
+        self.create_button(control_frame, 'Save Track', self.save_track_video, 0, 2)
 
         bottom_frame = tk.Frame(self.right_frame)
         bottom_frame.pack(pady=10, padx=10)
@@ -128,13 +128,21 @@ class BeeTrackerGUI:
             return
 
         self.assign_zone_original_frame = frame.copy()
+
+        cv2.imshow('Assign Zone', frame)
+        cv2.setMouseCallback('Assign Zone', self.on_click_zone_cv)
+        key = cv2.waitKey(0)
+        cv2.destroyAllWindows()
+        frame = self.draw_zone_cv()
+        # print('Zone:', self.polygon_points)
+
         self.assign_zone_frame, self.anchor_point = self.show_frame(frame, drawOnCanvas=False, canvas=self.track_canvas)
         x, y = self.anchor_point
 
         self.track_canvas.create_image(x, y, image=self.assign_zone_frame, anchor=tk.NW)
-        self.track_canvas.delete('anchors')
-        self.track_canvas.delete('polygon')
-        self.track_canvas.bind('<Button-1>', self.on_click_zone)
+        # self.track_canvas.delete('anchors')
+        # self.track_canvas.delete('polygon')
+        # self.track_canvas.bind('<Button-1>', self.on_click_zone)
 
     def draw_zone(self):
         """Draw the zone polygon on the canvas."""
@@ -147,7 +155,29 @@ class BeeTrackerGUI:
         if len(self.polygon_points) >= 3:
             points = [p for point in self.polygon_points for p in point]
             points.extend(self.polygon_points[0])
-            self.track_canvas.create_polygon(points, outline='red', width=2, fill='', tags='polygon')
+            self.track_canvas.create_polygon(points, outline='blue', width=2, fill='', tags='polygon')
+    
+    def draw_zone_cv(self, frame=None):
+        """Draw the zone polygon on the OpenCV window."""
+        frame = self.assign_zone_original_frame.copy() if frame is None else frame
+        for x, y in self.polygon_points:
+            cv2.circle(frame, (x, y), 3, (0, 0, 255), 1)
+
+        if len(self.polygon_points) >= 3:
+            points = self.polygon_points.copy()
+            points.append(self.polygon_points[0])
+            cv2.polylines(frame, np.array([points]), False, (255, 0, 0), 2)
+        return frame
+
+
+    def on_click_zone_cv(self, event, x, y, flags, param):
+        """Handle click event on the OpenCV window to define the zone."""
+        if event == cv2.EVENT_LBUTTONDOWN:
+            self.polygon_points.append((x, y))
+            frame = self.draw_zone_cv()
+            cv2.imshow('Assign Zone', frame)
+        if len(self.polygon_points) >= 3:
+            self.zone = self.polygon_points
 
     def on_click_zone(self, event):
         """Handle click event on the canvas to define the zone."""
@@ -188,22 +218,25 @@ class BeeTrackerGUI:
         if not self.video or not self.zone or not self.tracks:
             print('Missing data: video, zone, or tracks')
             return
-
+        self.track_canvas.delete('all')
         self.playing = False
         frame = self.assign_zone_original_frame.copy()
 
-        for observation in self.bee_tracker.get_observations():
-            x, y = observation
-            cv2.circle(frame, (x, y), 2, (255, 0, 0), -1)
+        # for observation in self.bee_tracker.get_observations():
+        #     x, y = observation
+        #     cv2.circle(frame, (x, y), 2, (255, 0, 0), -1)
 
         tracked_points = track['positions']
         cv2.polylines(frame, [np.array(tracked_points)], False, (0, 255, 0), 3)
         x, y = tracked_points[-1]
         cv2.circle(frame, (x, y), 10, (0, 255, 255), -1)
-
+        frame = self.draw_zone_cv(frame)
         self.tracking_image, (x, y) = self.show_frame(frame, drawOnCanvas=False, canvas=self.track_canvas)
         self.track_canvas.create_image(x, y, image=self.tracking_image, anchor=tk.NW)
-        self.draw_zone()
+        # self.draw_zone()
+        # write track info on the canvas
+        self.track_canvas.create_text(10, 10, text=f'Track ID: {track["track_id"]}', anchor=tk.NW, fill='white')
+        self.track_canvas.create_text(10, 30, text=f'Classification: {track["classification"]}', anchor=tk.NW, fill='white')
 
     def show_track_video(self):
         """Show the video with the tracked bees."""
@@ -223,10 +256,14 @@ class BeeTrackerGUI:
 
             cv2.polylines(frame, [np.array(track['positions'])], False, (0, 255, 0), 3)
             cv2.circle(frame, position, 10,(0, 255, 255), -1)
+            frame = self.draw_zone_cv(frame)
 
             self.track_video_frame, anchor = self.show_frame(frame, drawOnCanvas=False, canvas=self.track_canvas)
             x, y = anchor
             self.track_canvas.create_image(x, y, image=self.track_video_frame, anchor=tk.NW)
+            # write track info on the canvas
+            self.track_canvas.create_text(10, 10, text=f'Track ID: {track["track_id"]}', anchor=tk.NW, fill='white')
+            self.track_canvas.create_text(10, 30, text=f'Classification: {track["classification"]}', anchor=tk.NW, fill='white')
             self.track_canvas.update()
             self.track_canvas.after(int(1000/self.fps))
 
@@ -251,7 +288,7 @@ class BeeTrackerGUI:
             for observation in self.bee_tracker.get_observations(frame_id=frame_id):
                 x, y = observation
                 cv2.circle(frame, (x, y), 2, (255, 0, 0), -1)
-
+            frame = self.draw_zone_cv(frame)
             cv2.polylines(frame, [np.array(track['positions'])], False, (0, 255, 0), 3)
             cv2.circle(frame, position, 10, (0, 255, 255), -1)
             out.write(frame)
