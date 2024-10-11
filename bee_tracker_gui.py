@@ -18,7 +18,7 @@ from kalman_tracker import KalmanFilterTracker
 class BeeTrackerGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title('Bee Tracking GUI')
+        self.root.title('BeeNET - Beehive and Nest Entrance Tracker')
         self.root.geometry('1200x600')
         self.bee_detector = BeeDetectorYolo('models/stinglessbee-yolov8-s-best.pt', device='mps')
         self.bee_tracker = KalmanFilterTracker()
