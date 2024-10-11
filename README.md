@@ -1,10 +1,10 @@
-# Bee Tracking GUI
+# Beehive and Nest Entrance Tracking (BeeNET)
 
 ![Demo Video](images/DemoTrack.gif)
 
 ## Overview
 
-**Bee Tracking GUI** is a Python-based graphical user interface (GUI) designed for tracking bees in video footage. This tool integrates bee detection, Kalman filter-based tracking, and user interaction for zone assignment and real-time monitoring. The system is tailored for researchers and enthusiasts working with bee tracking data, providing an intuitive interface to manage and analyze bee movement.
+**BeeNET** is a Python-based graphical user interface (GUI) designed for tracking bees in video footage. This tool integrates bee detection, Kalman filter-based tracking, and user interaction for zone assignment and real-time monitoring. The system is tailored for researchers and enthusiasts working with bee tracking data, providing an intuitive interface to manage and analyze bee movement.
 
 ## Features
 
@@ -40,8 +40,8 @@ pip install opencv-python matplotlib numpy tkinter pandas scikit-learn filterpy 
 Clone the repository using the following command:
 
 ```bash
-git clone https://github.com/YourUsername/BeeTrackingGUI.git
-cd BeeTrackingGUI
+git clone https://github.com/asadiceiu/BeeNET.git
+cd BeeNET
 ```
 
 ## Usage
@@ -74,7 +74,7 @@ Below is an example of how to use the BeeTrackingGUI:
 
 Here are some screenshots of the BeeTrackingGUI:
 
-### Main Interface of the BeeTrackingGUI
+### Main Interface of the BeeNET
 
 ![Main Interface](images/Screenshot_1.png)
 
