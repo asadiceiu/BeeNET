@@ -13,14 +13,22 @@ import cv2
 import numpy as np
 from bee_detector_yolo import BeeDetectorYolo
 from kalman_tracker import KalmanFilterTracker
+import yaml
 
 
 class BeeTrackerGUI:
-    def __init__(self, root):
+    """A GUI application for bee tracking using YOLO and Kalman
+    Filter.
+    """
+
+    def __init__(self, root, model_path='models/stinglessbee-yolov8-s-best.pt'):
+        """Initialize the GUI application."""
         self.root = root
-        self.root.title('BeeNET - Beehive and Nest Entrance Tracker')
-        self.root.geometry('1200x600')
-        self.bee_detector = BeeDetectorYolo('models/stinglessbee-yolov8-s-best.pt', device='mps')
+        self.set_config_values()
+        self.model_path = self.model_path
+        self.root.title(self.title)
+        self.root.geometry(self.geometry)
+        self.bee_detector = BeeDetectorYolo(model_path, device=self.device)
         self.bee_tracker = KalmanFilterTracker()
         self.zone = None
         self.video = None
@@ -31,6 +39,17 @@ class BeeTrackerGUI:
         self.detected_bee_csv_path = None
         self.detected_bee_video_path = None
         self.setup_ui()
+
+    def set_config_values(self, config_path='config.yaml'):
+        """Set the configuration values."""
+        if not os.path.exists(config_path):
+            raise FileNotFoundError(f'Config file not found: {config_path}')
+        with open(config_path, 'r') as file:
+            config = yaml.safe_load(file)
+        self.model_path = config.get('model_path', 'models/stinglessbee-yolov8-s-best.pt')
+        self.device = config.get('device', 'mps')
+        self.geometry = config.get('geometry', '1200x600')
+        self.title = config.get('title', 'BeeNET - Beehive and Nest Entrance Tracker')
 
     def setup_ui(self):
         """Initialize the UI components."""
@@ -413,6 +432,7 @@ class BeeTrackerGUI:
 
 
 if __name__ == '__main__':
+    # model_path = config.get('model_path', 'models/stinglessbee-yolov8-s-best.pt')
     root = tk.Tk()
     app = BeeTrackerGUI(root)
     root.mainloop()

@@ -1,0 +1,16 @@
+# This file contains the configuration for the BeeNET application.
+# The configuration is loaded by the main application and used to set up the
+# application window, the model to use, and other settings.
+# ------- Model Configuration -------
+# The path to the model to use for inference.
+# The model should be a PyTorch model saved using torch.save().
+model_path: "./models/jmr-reedbees-best-8s-20250312.pt"
+# ------- Device Configuration -------
+# The device to use for inference. Options are "cpu" and "cuda".
+# If "cuda" is selected, the application will use the first available GPU.
+device: "mps"
+
+# ------- Application Configuration -------
+# The title of the application window.
+title: "BeeNET - Beehive and Nest Entrance Tracker (Reedbees)"
+geometry: "1200x600"
